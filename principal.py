@@ -4,10 +4,11 @@ import urllib
 import threading
 import cookielib
 import re
+from getpass import getpass
 
 print '[+]v0.1\n'
 print '[+]PoG is Life...\n'
-print '[+]By Rei_Gelado...\n'
+print '[+]By Arthur Aires(Rei_Gelado)..\n'
 
 def acessa_retorna(login,senha):
 	cabecalho_http = {
@@ -59,10 +60,11 @@ def acessa_retorna(login,senha):
 	verifica2 = re.compile('\\?action=unread;all;start=0">Clique aqui(.*?)todos os ')
 	verifica2_findall = re.findall(verifica2,res.read())		
 
-	if verifica2_findall[0] == ' para ver ':
-		print '[+]Nao ha topicos seus respondidos....\n'
-	else:
-		print '[+]Existem topicos!'
+	try:
+		if verifica2_findall[0] == ' para ver ':
+			print '[+]Nao ha topicos seus respondidos....\n'
+	except:
+		print '[+]Voce possui topicos seus respondidos!\n'
 
 	req = urllib2.Request('http://ubuntuforum-br.org/index.php?action=unread',urllib.urlencode(valores_post),cabecalho_http)
 	
@@ -70,14 +72,15 @@ def acessa_retorna(login,senha):
 	#Pog voce aqui de novo?rsrs
 	verifica3 =  re.compile('\\?action=unread;all;start=0">Clique aqui(.*?)todos os ')
 	verifica3_findall = re.findall(verifica3,res.read())
-
-	if verifica3_findall[0] == 	' para ver ':
-		print '[+]Nao ha topicos nao lidos desde a sua ultima visita....\n'
-	else:
-		print '[+]Existem topicos!'
+	
+	try:
+		if verifica3_findall[0] == 	' para ver ':
+			print '[+]Nao ha topicos nao lidos desde a sua ultima visita....\n'
+	except:
+		print '[+]Voce possui topicos nao lidos,desde a ultima visita!\n'
 
 login = raw_input('[+]Qual seu Login no forum :\n\nR:')
-senha = raw_input('[+]Qual sua Senha no forum :\n\nR:')
+senha = getpass('[+]Qual sua Senha no forum :\n\nR:')
 
 try:
 	print '[+]Iniciando a Thread.....\n'
